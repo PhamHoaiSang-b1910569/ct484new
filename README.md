@@ -1,4 +1,4 @@
-# Originner
+# Originner App
 
 A new Flutter project.
 
