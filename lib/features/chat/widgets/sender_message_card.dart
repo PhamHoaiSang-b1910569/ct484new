@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:originner/colors.dart';
 import 'package:originner/common/enums/message_enum.dart';
 import 'package:originner/features/chat/widgets/display_text_image_gif.dart';
-
+import 'package:ionicons/ionicons.dart';
 
 class SenderMessageCard extends StatelessWidget {
   const SenderMessageCard({
@@ -52,12 +52,21 @@ class SenderMessageCard extends StatelessWidget {
               Positioned(
                 bottom: 2,
                 right: 10,
-                child: Text(
-                  date,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey[600],
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color.fromARGB(153, 155, 154, 154),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(Ionicons.checkmark_done_sharp,size: 15,),
+                    
+                  ],
                 ),
               ),
             ],
