@@ -50,6 +50,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
         child: Center(
           child: Column(
             children: [
+              const SizedBox(height: 50),
               Stack(
                 children: [
 

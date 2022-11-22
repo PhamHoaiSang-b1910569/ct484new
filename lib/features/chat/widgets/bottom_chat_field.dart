@@ -177,21 +177,21 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: SizedBox(
-                      width: 100,
+                      width: 50,
                       child: Row(
                         children: [
-                          IconButton(
-                            onPressed: toggleEmojiKeyboardContainer,
-                            icon: const Icon(
-                              Iconsax.emoji_happy,
-                              color: Colors.grey,
-                            ),
-                          ),
+                          // IconButton(
+                          //   onPressed: toggleEmojiKeyboardContainer,
+                          //   icon: const Icon(
+                          //     Iconsax.emoji_happy5,
+                          //     color: Colors.grey,
+                          //   ),
+                          // ),
                           IconButton(
                             onPressed: selectGIF,
                             icon: const Icon(
                               UniconsLine.gift,
-                              color: Colors.grey,
+                              color: lColor,
                             ),
                           ),
                         ],
@@ -207,20 +207,21 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                           onPressed: selectImage,
                           icon: const Icon(
                             Iconsax.camera,
-                            color: Colors.grey,
+                            color: lColor,
                           ),
                         ),
                         IconButton(
                           onPressed: selectVideo,
                           icon: const Icon(
-                            Iconsax.filter_edit,
-                            color: Colors.grey,
+                            Iconsax.video_octagon,
+                            color: lColor,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  hintText: 'Type a message!',
+                  hintText: 'Nhập tin nhắn ...',
+                  hintStyle: const TextStyle(color: greyColor),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                     borderSide: const BorderSide(

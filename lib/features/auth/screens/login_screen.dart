@@ -85,7 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     const Text(
-                      "Chọn quê hương đi",
+                      "Quốc gia",
                       style: TextStyle(
                         fontSize: 18,
                         // fontWeight: FontWeight.w300,
@@ -134,7 +134,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: size.height * 0.5),
+              const SizedBox(height: 70),
               SizedBox(
                 width: 200,
                 child: CustomButton(
