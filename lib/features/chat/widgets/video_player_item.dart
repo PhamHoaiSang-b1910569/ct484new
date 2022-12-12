@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                 });
               },
               icon: Icon(
-                isPlay ? Icons.pause_circle : Icons.play_circle,
+                isPlay ? BootstrapIcons.play : BootstrapIcons.play_circle,
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,11 +7,12 @@ import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:originner/colors.dart';
 import 'package:originner/common/enums/message_enum.dart';
+import 'package:originner/common/providers/message_reply_provider.dart';
 import 'package:originner/common/utils/utils.dart';
 import 'package:originner/features/chat/controller/chat_controller.dart';
+import 'package:originner/features/chat/widgets/message_reply_preview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:unicons/unicons.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -153,128 +155,178 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   @override
   Widget build(BuildContext context) {
+    final messageReply = ref.watch(messageReplyProvider);
+    final isShowMessageReply = messageReply != null;
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: _messageController,
-                onChanged: (val) {
-                  if (val.isNotEmpty) {
-                    setState(() {
-                      isShowSendButton = true;
-                    });
-                  } else {
-                    setState(() {
-                      isShowSendButton = false;
-                    });
-                  }
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: mobileChatBoxColor,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SizedBox(
-                      width: 50,
-                      child: Row(
-                        children: [
-                          // IconButton(
-                          //   onPressed: toggleEmojiKeyboardContainer,
-                          //   icon: const Icon(
-                          //     Iconsax.emoji_happy5,
-                          //     color: Colors.grey,
-                          //   ),
-                          // ),
-                          IconButton(
-                            onPressed: selectGIF,
-                            icon: const Icon(
-                              UniconsLine.gift,
-                              color: lColor,
+        // const Divider(color: greyColor, indent: 0,height: 8, thickness: 1,),
+        isShowMessageReply ? const MessageReplyPreview() : const SizedBox(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 2,
+                ),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  child: IconButton(
+                    onPressed: selectImage,
+                    icon: const Icon(
+                      BootstrapIcons.image,
+                      color: buttonColor,
+                      size: 25,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 1,
+                ),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  child: IconButton(
+                    onPressed: selectVideo,
+                    icon: const Icon(
+                      Iconsax.menu,
+                      color: buttonColor,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextFormField(
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                  controller: _messageController,
+                  onChanged: (val) {
+                    if (val.isNotEmpty) {
+                      setState(() {
+                        isShowSendButton = true;
+                      });
+                    } else {
+                      setState(() {
+                        isShowSendButton = false;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color.fromARGB(255, 81, 81, 81),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: SizedBox(
+                        width: 50,
+                        child: Row(
+                          children: [
+                            // IconButton(
+                            //   onPressed: toggleEmojiKeyboardContainer,
+                            //   icon: const Icon(
+                            //     Iconsax.emoji_happy5,
+                            //     color: Colors.grey,
+                            //   ),
+                            // ),
+                            IconButton(
+                              onPressed: selectGIF,
+                              icon: const Icon(
+                                BootstrapIcons.filetype_gif,
+                                color: buttonColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  suffixIcon: SizedBox(
-                    width: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: selectImage,
-                          icon: const Icon(
-                            Iconsax.camera,
-                            color: lColor,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: selectVideo,
-                          icon: const Icon(
-                            Iconsax.video_octagon,
-                            color: lColor,
-                          ),
-                        ),
-                      ],
+                    // suffixIcon: SizedBox(
+                    //   width: 100,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: [
+                    // IconButton(
+                    //   onPressed: selectImage,
+                    //   icon: const Icon(
+                    //     BootstrapIcons.image_alt,
+                    //     color: blackColor,
+                    //     size: 25,
+                    //   ),
+                    // ),
+                    // IconButton(
+                    //   onPressed: selectVideo,
+                    //   icon: const Icon(
+                    //     BootstrapIcons.three_dots,
+                    //     color: blackColor,
+                    //   ),
+                    // ),
+                    //     ],
+                    //   ),
+                    // ),
+                    hintText: 'Nhập tin nhắn ...',
+                    hintStyle: const TextStyle(
+                        color: greyColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                          width: 1, color: Color.fromARGB(255, 81, 81, 81)),
                     ),
-                  ),
-                  hintText: 'Nhập tin nhắn ...',
-                  hintStyle: const TextStyle(color: greyColor),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                          width: 1, color: Color.fromARGB(255, 81, 81, 81)),
                     ),
+                    contentPadding: const EdgeInsets.all(10),
                   ),
-                  contentPadding: const EdgeInsets.all(10),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 8,
-                right: 2,
-                left: 2,
-              ),
-              child: CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 189, 138, 49),
-                radius: 25,
-                child: GestureDetector(
-                  child: Icon(
-                    isShowSendButton
-                        ? Icons.send
-                        : isRecording
-                            ? Icons.close
-                            : Iconsax.microphone,
-                    color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 2,
+                ),
+                child: CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  radius: 25,
+                  child: GestureDetector(
+                    child: Icon(
+                      isShowSendButton
+                          ? BootstrapIcons.send_fill
+                          : isRecording
+                              ? BootstrapIcons.x_lg
+                              : BootstrapIcons.mic,
+                      color: iconColor,
+                      size: 20,
+                    ),
+                    onTap: sendTextMessage,
                   ),
-                  onTap: sendTextMessage,
                 ),
               ),
-            ),
-            isShowEmojiContainer
-                ? SizedBox(
-                    height: 210,
-                    child: EmojiPicker(
-                      onEmojiSelected: ((category, emoji) {
-                        setState(() {
-                          _messageController.text =
-                              _messageController.text + emoji.emoji;
-                        });
-
-                        if (!isShowSendButton) {
+              isShowEmojiContainer
+                  ? SizedBox(
+                      height: 210,
+                      child: EmojiPicker(
+                        onEmojiSelected: ((category, emoji) {
                           setState(() {
-                            isShowSendButton = true;
+                            _messageController.text =
+                                _messageController.text + emoji.emoji;
                           });
-                        }
-                      }),
-                    ),
-                  )
-                : const SizedBox(),
-          ],
+
+                          if (!isShowSendButton) {
+                            setState(() {
+                              isShowSendButton = true;
+                            });
+                          }
+                        }),
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
         ),
       ],
     );

@@ -21,8 +21,14 @@ class SelectContactsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: appBarColor,
-        title: const Text('Danh sách liên hệ'),
+        backgroundColor: blackColor,
+        title: const Text(
+          'Danh sách liên hệ',
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {},
@@ -52,6 +58,8 @@ class SelectContactsScreen extends ConsumerWidget {
                           contact.displayName,
                           style: const TextStyle(
                             fontSize: 18,
+                            color: greyColor,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         leading: contact.photo == null

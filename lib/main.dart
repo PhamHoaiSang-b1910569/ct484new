@@ -33,8 +33,8 @@ class MyApp extends ConsumerWidget {
       title: 'Originner App',
       
       theme: ThemeData(
-        scaffoldBackgroundColor: backgroundColor,
-        fontFamily: 'OpenSans'
+        scaffoldBackgroundColor: blackColor,
+        fontFamily: 'Robotor'
       ),
      
       onGenerateRoute: (settings) => generateRoute(settings),

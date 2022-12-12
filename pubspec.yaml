@@ -50,16 +50,17 @@ dependencies:
   enough_giphy_flutter: ^0.3.0
   flutter_sound: ^9.2.13
   path_provider: ^2.0.11
-  permission_handler: ^9.2.0
+  permission_handler: ^10.0.0
   audioplayers: ^1.0.1
   swipe_to: ^1.0.2
   story_view: ^0.13.2
-  agora_uikit: ^1.0.2
+  agora_uikit: ^1.0.4
   iconsax: ^0.0.8
   ionicons: ^0.1.2
   unicons: ^2.1.0
-  
- 
+  bootstrap_icons: ^1.10.2
+  pin_code_fields: ^7.4.0
+  flutter_otp_text_field: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +91,7 @@ flutter:
     - assets/bg.png
     - assets/mhc.png
     - assets/landing.png
+    - assets/login.png
 
   fonts:
     - family: Lato
@@ -100,12 +102,13 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Medium.ttf
-    
-    - family: ubuntu
+    - family: Roboto
       fonts:
-        - asset: assets/fonts/Ubuntu-Regular.ttf
-        - asset: assets/fonts/Ubuntu-Bold.ttf
-          weight: 700
+        - asset: assets/fonts/Roboto-Bold.ttf
+    - family: Robotor
+      fonts:
+        - asset: assets/fonts/Roboto-Light.ttf
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

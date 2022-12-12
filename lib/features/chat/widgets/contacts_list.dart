@@ -41,19 +41,25 @@ class ContactsList extends ConsumerWidget {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: ListTile(
                           title: Text(
                             chatContactData.name,
                             style: const TextStyle(
                               fontSize: 18,
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: Text(
                               chatContactData.lastMessage,
-                              style: const TextStyle(fontSize: 15),
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: greyColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           leading: CircleAvatar(
@@ -67,12 +73,12 @@ class ContactsList extends ConsumerWidget {
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const Divider(color: dividerColor, indent: 0),
                   ],
                 );
               },

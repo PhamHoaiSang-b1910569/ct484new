@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:originner/colors.dart';
 import 'package:originner/common/enums/message_enum.dart';
 import 'package:originner/features/chat/widgets/video_player_item.dart';
 
@@ -23,7 +25,9 @@ class DisplayTextImageGIF extends StatelessWidget {
         ? Text(
             message,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 18,
+              color: textColor,
+              fontWeight: FontWeight.bold,
             ),
           )
         : type == MessageEnum.audio
@@ -31,6 +35,7 @@ class DisplayTextImageGIF extends StatelessWidget {
                 return IconButton(
                   constraints: const BoxConstraints(
                     minWidth: 70,
+                    // maxHeight: 20
                   ),
                   onPressed: () async {
                     if (isPlaying) {
@@ -45,9 +50,10 @@ class DisplayTextImageGIF extends StatelessWidget {
                       });
                     }
                   },
+                  
                   icon: Icon(
-                    isPlaying ? Icons.pause_circle : 
-                    Icons.play_circle,
+                    isPlaying ? BootstrapIcons.pause : 
+                    BootstrapIcons.play,
                   ),
                 );
               })

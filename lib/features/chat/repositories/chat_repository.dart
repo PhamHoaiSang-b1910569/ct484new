@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:originner/common/enums/message_enum.dart';
+import 'package:originner/common/providers/message_reply_provider.dart';
 import 'package:originner/common/repositories/common_firebase_storage_repository.dart';
 import 'package:originner/common/utils/utils.dart';
 import 'package:originner/models/chat_contact.dart';
@@ -123,8 +124,12 @@ class ChatRepository {
     required String messageId,
     required String username,
     required MessageEnum messageType,
-    required recieverUserName,
+    required String senderUsername,
+    required recieverUsername,
+    required MessageReply? messageReply,
+    required String recieverUserName,
   }) async {
+    
     final message = Message(
       senderId: auth.currentUser!.uid,
       recieverid: recieverUserId,
@@ -133,6 +138,13 @@ class ChatRepository {
       timeSent: timeSent,
       messageId: messageId,
       isSeen: false,
+      repliedMessage: messageReply == null ? '' : messageReply.message,
+      repliedTo: messageReply == null
+          ? ''
+          : messageReply.isMe
+              ? senderUsername
+              : recieverUserName ,
+      repliedMessageType: messageReply == null ? MessageEnum.text : messageReply.messageEnum,
     );
     await firestore
         .collection('users')
@@ -161,6 +173,7 @@ class ChatRepository {
     required String text,
     required String recieverUserId,
     required UserModel senderUser,
+    required MessageReply? messageReply,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -186,8 +199,11 @@ class ChatRepository {
         timeSent: timeSent,
         messageType: MessageEnum.text,
         messageId: messageId,
+        recieverUsername: recieverUserData.name,
         username: senderUser.name,
+        messageReply: messageReply,
         recieverUserName: recieverUserData.name,
+        senderUsername: senderUser.name,
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
@@ -201,6 +217,7 @@ class ChatRepository {
     required UserModel senderUserData,
     required ProviderRef ref,
     required MessageEnum messageEnum,
+    required MessageReply? messageReply,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -252,7 +269,10 @@ class ChatRepository {
         messageId: messageId,
         username: senderUserData.name,
         messageType: messageEnum,
+        recieverUsername: recieverUserData.name,
+        messageReply: messageReply,
         recieverUserName: recieverUserData.name,
+        senderUsername: senderUserData.name,
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
@@ -264,6 +284,7 @@ class ChatRepository {
     required String gifUrl,
     required String recieverUserId,
     required UserModel senderUser,
+    required MessageReply? messageReply,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -290,8 +311,38 @@ class ChatRepository {
         messageType: MessageEnum.gif,
         messageId: messageId,
         username: senderUser.name,
+        recieverUsername: recieverUserData.name,
+        messageReply: messageReply,
         recieverUserName: recieverUserData.name,
+        senderUsername: senderUser.name,
       );
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+   void setChatMessageSeen(
+    BuildContext context,
+    String recieverUserId,
+    String messageId,
+  ) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(recieverUserId)
+          .collection('messages')
+          .doc(messageId)
+          .update({'isSeen': true});
+
+      await firestore
+          .collection('users')
+          .doc(recieverUserId)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .update({'isSeen': true});
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
